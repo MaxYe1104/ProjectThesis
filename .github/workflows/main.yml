@@ -1,0 +1,16 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  check-branch-naming:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch starts with "submission/"
+        run: |
+          if [[ ! "${{ github.head_ref }}" =~ ^submission/ ]]; then
+            echo "⛔ Pull requests must be opened from a branch named 'submission/<your-title>'"
+            exit 1
+          fi
